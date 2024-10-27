@@ -9,7 +9,7 @@ pub struct YetiPlugin;
 
 impl Plugin for YetiPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, yeti_setup).add_systems(
+        app.add_systems(Startup, setup_yeti).add_systems(
             Update,
             (
                 // press the right arrow key to animate the right sprite
@@ -28,7 +28,7 @@ impl Plugin for YetiPlugin {
 #[derive(Component)]
 struct YetiSprite;
 
-pub fn yeti_setup(
+pub fn setup_yeti(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
