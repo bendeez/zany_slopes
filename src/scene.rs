@@ -1,11 +1,10 @@
-use crate::configuration::ASSET_SCALE;
 use bevy::prelude::*;
 
 pub struct ScenePlugin;
 
 const SCENE: &str = "scene.png";
-const SCENE_WIDTH: f32 = 15.0 * ASSET_SCALE;
-const SCENE_HEIGHT: f32 = 7.5 * ASSET_SCALE;
+const SCENE_WIDTH: f32 = 15.0;
+const SCENE_HEIGHT: f32 = 7.5;
 
 impl Plugin for ScenePlugin {
     fn build(&self, app: &mut App) {
