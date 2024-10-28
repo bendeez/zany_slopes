@@ -4,6 +4,8 @@ use crate::movement::move_sprite;
 use bevy::prelude::*;
 
 const YETI_SPRITESHEET: &str = "yeti_spritesheet.png";
+const TILE_SIZE: u32 = 16;
+const YETI_DIMENSIONS: f32 = 3.0;
 
 pub struct YetiPlugin;
 
@@ -35,13 +37,14 @@ pub fn setup_yeti(
 ) {
     let sprite_texture = load_spritesheet(
         YETI_SPRITESHEET.to_string(),
+        TILE_SIZE,
         asset_server,
         texture_atlas_layouts,
     );
     let animation_config = AnimationConfig::new(0, 2, 20);
     commands.spawn((
         SpriteBundle {
-            transform: Transform::from_scale(Vec3::splat(6.0))
+            transform: Transform::from_scale(Vec3::splat(YETI_DIMENSIONS))
                 .with_translation(Vec3::new(-50.0, 0.0, 0.0)),
             texture: sprite_texture.texture,
             ..default()

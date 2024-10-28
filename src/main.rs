@@ -1,6 +1,7 @@
 mod animation;
 mod asset_loader;
 mod camera;
+mod configuration;
 mod movement;
 mod scene;
 mod yeti;
