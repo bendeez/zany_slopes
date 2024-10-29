@@ -1,21 +1,23 @@
 use bevy::prelude::*;
 
-pub struct SpriteTexture {
-    pub texture: Handle<Image>,
-    pub texture_atlas_layout: Handle<TextureAtlasLayout>,
+const YETI_SPRITESHEET: &str = "yeti_spritesheet.png";
+
+pub struct AssetLoaderPlugin;
+
+impl Plugin for AssetLoaderPlugin {
+    fn build(&self, app: &mut App) {
+        app.init_resource::<ZanySlopeAssets>()
+            .add_systems(Startup, load_assets);
+    }
 }
 
-pub fn load_spritesheet(
-    spritesheet: String,
-    tile_size: u32,
-    asset_server: Res<AssetServer>,
-    mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
-) -> SpriteTexture {
-    let texture = asset_server.load(spritesheet);
-    let layout = TextureAtlasLayout::from_grid(UVec2::splat(tile_size), 3, 1, None, None);
-    let texture_atlas_layout = texture_atlas_layouts.add(layout);
-    SpriteTexture {
-        texture: texture.clone(),
-        texture_atlas_layout: texture_atlas_layout.clone(),
-    }
+#[derive(Resource, Debug, Default)]
+pub struct ZanySlopeAssets {
+    pub yeti: Handle<Image>,
+}
+
+pub fn load_assets(asset_server: Res<AssetServer>, mut zany_slope_assets: ResMut<ZanySlopeAssets>) {
+    *zany_slope_assets = ZanySlopeAssets {
+        yeti: asset_server.load(YETI_SPRITESHEET),
+    };
 }

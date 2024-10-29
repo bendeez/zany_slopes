@@ -1,9 +1,8 @@
 use crate::animation::{trigger_animation, AnimationConfig};
-use crate::asset_loader::load_spritesheet;
+use crate::asset_loader::ZanySlopeAssets;
 use crate::movement::move_sprite;
 use bevy::prelude::*;
 
-const YETI_SPRITESHEET: &str = "yeti_spritesheet.png";
 const TILE_SIZE: u32 = 16;
 const YETI_DIMENSIONS: f32 = 3.0;
 
@@ -32,25 +31,21 @@ struct YetiSprite;
 
 pub fn setup_yeti(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     mut texture_atlas_layouts: ResMut<Assets<TextureAtlasLayout>>,
+    zany_slope_assets: Res<ZanySlopeAssets>,
 ) {
-    let sprite_texture = load_spritesheet(
-        YETI_SPRITESHEET.to_string(),
-        TILE_SIZE,
-        asset_server,
-        texture_atlas_layouts,
-    );
+    let layout = TextureAtlasLayout::from_grid(UVec2::splat(TILE_SIZE), 3, 1, None, None);
+    let texture_atlas_layout = texture_atlas_layouts.add(layout);
     let animation_config = AnimationConfig::new(0, 2, 20);
     commands.spawn((
         SpriteBundle {
             transform: Transform::from_scale(Vec3::splat(YETI_DIMENSIONS))
                 .with_translation(Vec3::new(-50.0, 0.0, 0.0)),
-            texture: sprite_texture.texture,
+            texture: zany_slope_assets.yeti.clone(),
             ..default()
         },
         TextureAtlas {
-            layout: sprite_texture.texture_atlas_layout,
+            layout: texture_atlas_layout,
             index: animation_config.first_sprite_index,
         },
         YetiSprite,
