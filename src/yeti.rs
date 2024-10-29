@@ -10,7 +10,7 @@ pub struct YetiPlugin;
 
 impl Plugin for YetiPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, setup_yeti).add_systems(
+        app.add_systems(PostStartup, setup_yeti).add_systems(
             Update,
             (
                 // press the right arrow key to animate the right sprite
